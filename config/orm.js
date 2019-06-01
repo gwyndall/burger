@@ -1,34 +1,47 @@
-var connection = require('connection.js');
+var connection = require('./connection.js');
 
-function selectAll(callback){
-    connection.query(
-        'SELECT * FROM burgers',
-        callback
-      );
-}
 
-function insertOne(newBurger, callback){
+var orm = {
+  selectAll: function(cb) {
+    var queryString = "SELECT * FROM burgers;";
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+  insertOne: function(newBurger, cb) {
+    var queryString = 'INSERT INTO burgers (burger_name) value ('+ newBurger + ')';
+    
+    console.log(queryString);
+
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    })
+  },
+  // An example of objColVals would be {name: panther, sleepy: true}
+  updateOne: function(id, cb) {
+
     connection.query(
-        'INSERT INTO burgers (burger_name) value (?)',
-        [
-          newBurger
-        ],
-        callback
-      );
+      
+      "UPDATE burgers SET devoured = true WHERE id=?",
+      [
+        id
+      ], function(err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
+    });
+  }
+  
 };
 
-function updateOne(id, callback){
-    connection.query(
-        'SELECT * FROM burgers WHERE id=?',
-        [
-          id
-        ],
-        callback
-      );
-}
 
-module.exports = {
-    selectAll: selectAll,
-    insertOne: insertOne,
-    updateOne: updateOne,
-  };
+
+module.exports = orm;
