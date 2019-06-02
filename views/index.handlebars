@@ -2,9 +2,9 @@
 
 
 <ul>
-  {{#each burger}}
+  {{#each burgers}}
   	<li>
-  		<p> {{this.id}}.&nbsp;{{this.buger_name}}</p>
+  		<p> {{this.id}}.&nbsp;{{this.burger_name}}</p>
       <button data-id="{{this.id}}" class="devour">Devour It!</button>
   	</li>
   {{/each}}
@@ -18,7 +18,7 @@
   {{/each}}
 </ul>
 
-<form class="create-form" action="/api/quotes" method="POST">
+<form class="create-form" action="/api/burgers" method="POST">
 
   <div class="form-group">
     <label for="burg">Add a Burger:</label>

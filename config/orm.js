@@ -6,8 +6,10 @@ var orm = {
     var queryString = "SELECT * FROM burgers;";
     connection.query(queryString, function(err, result) {
       if (err) {
+        console.log('error', err)
         throw err;
       }
+      console.log('result', result)
       cb(result);
     });
   },
